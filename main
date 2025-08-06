@@ -1,0 +1,35 @@
+import pandas as pd
+
+# Пример данных кандидатов
+data = [    {'id': 1, 'name': 'Анна', 'skills': 'Python, ML', 'experience': 3, 'location': 'Москва'},
+    {'id': 2, 'name': 'Иван', 'skills': 'Java, Spring', 'experience': 5, 'location': 'СПб'},
+    {'id': 3, 'name': 'Оля', 'skills': 'Data Science, Python', 'experience': 2, 'location': 'Москва'},
+    {'id': 4, 'name': 'Сергей', 'skills': 'C++, Embedded', 'experience': 6, 'location': 'Казань'},
+    {'id': 5, 'name': 'Мария', 'skills': 'Python, Django', 'experience': 4, 'location': 'Москва'},
+]
+df_candidates = pd.DataFrame(data)
+
+# Фильтрация по навыкам, опыту и городу
+def filter_candidates(df, skill, location, min_experience):
+    return df[        df['skills'].str.contains(skill) &
+        (df['location'] == location) &
+        (df['experience'] >= min_experience)
+    ]
+
+filtered = filter_candidates(df_candidates, 'Python', 'Москва', 3)
+print(filtered)
+
+# Логика свайпов и мэтчинга
+right_swiped_ids = set()
+
+def swipe_right(candidate_id):
+    right_swiped_ids.add(candidate_id)
+
+def get_matches(employer_swipes, candidate_swipes):
+    return set(employer_swipes) & set(candidate_swipes)
+
+# Пример: работодатель лайкнул Анну (id=1), кандидат Мария (id=5) лайкнула работодателя
+employer_likes = {1, 5}
+candidate_likes = {5}
+matches = get_matches(employer_likes, candidate_likes)
+print("Мэтчи:", matches)
