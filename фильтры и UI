@@ -1,0 +1,8 @@
+import streamlit as st
+
+skill = st.sidebar.text_input("Навык", "Python")
+location = st.sidebar.selectbox("Город", df_candidates['location'].unique())
+min_experience = st.sidebar.slider("Минимальный опыт (лет)", 0, 10, 3)
+
+filtered = filter_candidates(df_candidates, skill, location, min_experience)
+st.dataframe(filtered)
